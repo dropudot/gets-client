@@ -13,36 +13,17 @@
       Select Location
     </div>
     <div class="overflow-x-scroll flex flex-row">
-      <div class="space-y-4 mt-4 mx-2 bg-slate-800">
+      {#each [1, 2, 3, 4] as {}}
+      <div class="space-y-4 mt-4 mx-2 bg-slate-800 min-w-80">
         <div>
           <img src="shrek.jpg" alt="">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>         
+          <h5 class="my-2 px-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+          <p class="mb-3 px-2 font-normal text-gray-700 dark:text-gray-400 leading-tight">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>         
         </div>
       </div>
-      <div class="space-y-4 mt-4 mx-2 bg-slate-800">
-        <div>
-            <img src="shrek.jpg" alt="">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-        </div>
-      </div>
-      <div class="space-y-4 mt-4 mx-2 bg-slate-800">
-        <div>
-            <img src="shrek.jpg" alt="">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-        </div>
-      </div>
-      <div class="space-y-4 mt-4 mx-2 bg-slate-800">
-        <div>
-            <img src="shrek.jpg" alt="">
-          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-        </div>
-      </div>
+      {/each}
     </div>
-    <div class="flex flex-grow justify-center items-end mb-40">
+    <div class="flex flex-grow justify-center items-end mb-24">
       <Button class="bg-cyan-500 py-4 px-16 text-white text-xl rounded-lg" on:click={() => {
         location = false
         pick1 = true
