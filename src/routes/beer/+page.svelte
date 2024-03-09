@@ -110,6 +110,35 @@
           <p class="text-l">темный эль</p>
         </div>
       </div>
+    {:else if styleRadioValue == "Сладкое"}
+      <div class="flex items-center ps-4 border border-gray-700 rounded mb-2 bg-fuchsia-500">
+        <input id="bordered-radio-sweet-mead" type="radio" value="" name="bordered-radio" class="w-4 h-4 text-cyan-600 bg-gray-700 focus:ring-cyan-500 ring-offset-gray-800 focus:ring-2 border-gray-600">
+        <div class="flex flex-col w-full py-2 ms-3 text-white">
+          <label for="bordered-radio-sweet-mead" class="text-xl">Мид</label>
+          <p class="text-l">mead</p>
+        </div>
+      </div>
+      <div class="flex items-center ps-4 border border-gray-700 rounded mb-2 bg-fuchsia-500">
+        <input id="bordered-radio-sweet-sour-ale" type="radio" value="" name="bordered-radio" class="w-4 h-4 text-cyan-600 bg-gray-700 focus:ring-cyan-500 ring-offset-gray-800 focus:ring-2 border-gray-600">
+        <div class="flex flex-col w-full py-2 ms-3 text-white">
+          <label for="bordered-radio-sweet-sour-ale" class="text-xl">Саур Эль</label>
+          <p class="text-l">sour</p>
+        </div>
+      </div>
+      <div class="flex items-center ps-4 border border-gray-700 rounded mb-2 bg-fuchsia-500">
+        <input id="bordered-radio-sweet-gose" type="radio" value="" name="bordered-radio" class="w-4 h-4 text-cyan-600 bg-gray-700 focus:ring-cyan-500 ring-offset-gray-800 focus:ring-2 border-gray-600">
+        <div class="flex flex-col w-full py-2 ms-3 text-white">
+          <label for="bordered-radio-sweet-gose" class="text-xl">Гозе</label>
+          <p class="text-l">gose</p>
+        </div>
+      </div>
+      <div class="flex items-center ps-4 border border-gray-700 rounded mb-2 bg-fuchsia-500">
+        <input id="bordered-radio-sweet-cider" type="radio" value="" name="bordered-radio" class="w-4 h-4 text-cyan-600 bg-gray-700 focus:ring-cyan-500 ring-offset-gray-800 focus:ring-2 border-gray-600">
+        <div class="flex flex-col w-full py-2 ms-3 text-white">
+          <label for="bordered-radio-sweet-cider" class="text-xl">Сидр</label>
+          <p class="text-l">cider</p>
+        </div>
+      </div>
     {/if}
   </div>
   <div class="flex flex-grow justify-center items-end mb-24">
