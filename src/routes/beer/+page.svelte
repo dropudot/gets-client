@@ -15,11 +15,11 @@
       Select Location
     </div>
     <div class="overflow-x-scroll flex flex-row">
-      {#each [1, 2, 3, 4] as {}}
+      {#each [1, 2, 3, 4] as i}
       <div class="space-y-4 mt-4 mx-2 bg-slate-800 min-w-80">
         <div>
           <img src="shrek.jpg" alt="">
-          <h5 class="my-2 px-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+          <h5 class="my-2 px-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Location {i}</h5>
           <p class="mb-3 px-2 font-normal text-gray-700 dark:text-gray-400 leading-tight">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>         
         </div>
       </div>
@@ -184,4 +184,6 @@
       Next
     </Button>
   </div>
+{:else if pick3}
+  <div></div>
 {/if}
