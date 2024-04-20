@@ -1,7 +1,13 @@
 <script lang="ts">
   import { Button } from 'flowbite-svelte'
+  import Golodranets from '../../components/Golodranets.svelte'
+  import Shroom from '../../components/Shroom.svelte'
+  import Lager from '../../components/Lager.svelte'
+  import Butylochka from '../../components/Butylochka.svelte'
 
-  let location = true
+  let location_page = true
+  let location: string
+
   let pick1 = false
   let pick2 = false
   let pick3 = false
@@ -9,37 +15,62 @@
   let styleRadioValue: string
 </script>
 
-{#if location}
+{#if location_page}
   <div class="flex flex-col h-full">
-    <div class="text-white text-5xl p-2">Select Location</div>
+    <div class="text-white text-5xl p-2">Выберите заведение</div>
     <div class="overflow-x-scroll flex flex-row">
-      {#each [1, 2, 3, 4] as i}
-        <div class="space-y-4 mt-4 mx-2 bg-slate-800 min-w-80">
-          <div>
-            <img src="shrek.jpg" alt="" />
-            <h5
-              class="my-2 px-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Location {i}
-            </h5>
-            <p
-              class="mb-3 px-2 font-normal text-gray-700 dark:text-gray-400 leading-tight">
-              Here are the biggest enterprise technology acquisitions of 2021 so
-              far, in reverse chronological order.
-            </p>
-          </div>
-        </div>
-      {/each}
+      <Button
+        class="space-y-4 mt-4 mx-2 bg-slate-800 min-w-80 text-start p-0"
+        on:click={() => {
+          location = 'Шрум'
+        }}>
+        <Shroom />
+      </Button>
+      <Button
+        class="space-y-4 mt-4 mx-2 bg-slate-800 min-w-80 text-start p-0"
+        on:click={() => {
+          location = 'Голодранец'
+        }}>
+        <Golodranets />
+      </Button>
+      <Button
+        class="space-y-4 mt-4 mx-2 bg-slate-800 min-w-80 text-start p-0"
+        on:click={() => {
+          location = 'Лагер'
+        }}>
+        <Lager />
+      </Button>
+      <Button
+        class="space-y-4 mt-4 mx-2 bg-slate-800 min-w-80 text-start p-0"
+        on:click={() => {
+          location = 'Бутылочка'
+        }}>
+        <Butylochka />
+      </Button>
     </div>
     <div class="flex flex-grow justify-center items-end mb-24">
-      <Button
-        class="bg-fuchsia-500 py-4 px-16 text-white text-xl rounded-lg"
-        on:click={() => {
-          location = false
-          pick1 = true
-          styleRadioValue = 'Классическое'
-        }}>
-        Next
-      </Button>
+      {#if location == null}
+        <Button
+          class="bg-fuchsia-500 py-4 px-16 text-white text-xl rounded-lg"
+          disabled
+          on:click={() => {
+            location_page = false
+            pick1 = true
+            styleRadioValue = 'Классическое'
+          }}>
+          Next
+        </Button>
+      {:else}
+        <Button
+          class="bg-fuchsia-500 py-4 px-16 text-white text-xl rounded-lg"
+          on:click={() => {
+            location_page = false
+            pick1 = true
+            styleRadioValue = 'Классическое'
+          }}>
+          Next
+        </Button>
+      {/if}
     </div>
   </div>
 {:else if pick1}
@@ -98,7 +129,7 @@
     <Button
       class="bg-cyan-500 py-4 px-8 text-white text-xl rounded-lg mr-2"
       on:click={() => {
-        location = true
+        location_page = true
         pick1 = false
       }}>
       &#8592;
