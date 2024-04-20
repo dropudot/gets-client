@@ -1,13 +1,16 @@
 <script lang="ts">
   import '../app.css'
+  import { env } from '$env/dynamic/public'
+  import { goto } from '$app/navigation'
 </script>
 
 <header class="bg-cyan-500 h-16">
   <div class="h-full flex">
     <div class="flex w-full items-center justify-center">
-      <div class="text-white">logo</div>
+      <button on:click={() => goto(`${env.PUBLIC_CLIENT_URL}`)}>
+        <img class="w-12" src="logo.png" alt="" />
+      </button>
     </div>
-    <div class="absolute right-0 align-middle h-16 text-white">menu</div>
   </div>
 </header>
 <body class="flex flex-col bg-zinc-950 h-screen overflow-y-hidden">
