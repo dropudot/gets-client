@@ -13,6 +13,6 @@
     </div>
   </div>
 </header>
-<body class="flex flex-col bg-zinc-950 h-screen overflow-y-hidden">
+<body class="flex flex-col bg-zinc-900 h-full overflow-y-scroll">
   <slot />
 </body>
