@@ -5,6 +5,8 @@
   import Lager from '../../components/Lager.svelte'
   import Butylochka from '../../components/Butylochka.svelte'
   import { Locations, Categories, Subcategories, Styles } from './enums'
+  import type { Beer, FilterBeer } from './types'
+  import { env } from '$env/dynamic/public'
 
   let location_page = true
   let location: Locations
@@ -25,26 +27,45 @@
   let isClickedG = false
   let isClickedL = false
 
+  let beer: Promise<Array<Beer>>
+
   async function get_result_beer(
     location: Locations,
     category: Categories,
     subcategory: Subcategories,
     style: Styles | null
-  ) {
-    let locationKey =
-      Object.keys(Locations)[Object.values(Locations).indexOf(location)]
-    let categoryKey =
+  ): Promise<Array<Beer>> {
+    const categoryKey =
       Object.keys(Categories)[Object.values(Categories).indexOf(category)]
-    let subcategoryKey =
+    const subcategoryKey =
       Object.keys(Subcategories)[
         Object.values(Subcategories).indexOf(subcategory)
       ]
-    if (style != null) {
-      let styleKey = Object.keys(Styles)[Object.values(Styles).indexOf(style)]
-      console.log(locationKey, categoryKey, subcategoryKey, styleKey)
-    } else {
-      console.log(locationKey, categoryKey, subcategoryKey, style)
-    }
+
+    const filter: FilterBeer =
+      style != null
+        ? {
+            location: location,
+            category: categoryKey,
+            subcategory: subcategoryKey,
+            style: Object.keys(Styles)[Object.values(Styles).indexOf(style)],
+          }
+        : {
+            location: location,
+            category: categoryKey,
+            subcategory: subcategoryKey,
+            style: '',
+          }
+
+    const response = await fetch(`${env.PUBLIC_API_URL}/result_beer`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(filter),
+    })
+    const result = await response.json()
+    return result
   }
 </script>
 
@@ -456,8 +477,15 @@
             subcategory_page = false
             if (category == 'Соленое') {
               style = null
+              beer = get_result_beer(
+                location,
+                category,
+                subcategory,
+                style
+              ).then((data) => {
+                return data
+              })
               result_page = true
-              get_result_beer(location, category, subcategory, style)
             } else {
               style_page = true
             }
@@ -652,7 +680,7 @@
           <input
             id="bordered-radio-darkale-stout"
             type="radio"
-            value="Стаут"
+            value="Стаут / Портер"
             bind:group={style}
             class="w-4 h-4 text-cyan-600 bg-gray-700 focus:ring-cyan-500 ring-offset-gray-800 focus:ring-2 border-gray-600" />
           <div class="flex flex-col w-full py-2 ms-3 text-white">
@@ -958,7 +986,11 @@
           on:click={() => {
             style_page = false
             result_page = true
-            get_result_beer(location, category, subcategory, style)
+            beer = get_result_beer(location, category, subcategory, style).then(
+              (data) => {
+                return data
+              }
+            )
           }}>
           Далее
         </Button>
@@ -979,29 +1011,40 @@
       </div>
     </div>
     <div class="overflow-x-scroll flex flex-row">
-      {#each [1, 2, 3, 4] as num}
-        <div
-          class="space-y-4 mx-2 bg-fuchsia-500 max-w-56 min-w-56 text-start p-0">
-          <div>
-            <img src="shroom.jpeg" class="pt-0" alt="" />
-            <h5 class="mt-2 mb-1 px-2 text-xl font-bold text-white">
-              Название {num}
-            </h5>
-            <p class="mb-1 px-2 text-md font-normal text-white">
-              Стиль от Пивоварня (%)
-            </p>
-            <p class="mb-1 px-2 text-md font-normal text-white">Описание</p>
-            <div class="m-2 px-2 bg-cyan-500 min-h-12">
-              <p class="pt-2 px-1 text-md font-normal text-white">
-                Отзыв с Untappd
+      {#await beer}
+        <div></div>
+      {:then beer}
+        {#each beer as beer}
+          <div
+            class="space-y-4 mx-2 bg-fuchsia-500 max-w-56 min-w-56 text-start p-0">
+            <div>
+              <img src={beer.img_url} class="pt-0" alt="" />
+              <h5 class="mt-2 mb-1 px-2 text-xl font-bold text-white">
+                {beer.name}
+              </h5>
+              <p class="mb-1 px-2 text-md font-normal text-white">
+                {beer.untappd_style} ({beer.abv}%)
               </p>
-              <p class="pb-2 px-1 text-md font-normal text-white">«текст»</p>
+              <p class="mb-1 px-2 text-md font-normal text-white">
+                {beer.brewery}
+              </p>
+              <p class="mb-1 px-2 text-md font-normal text-white">
+                {beer.description}
+              </p>
+              <div class="m-2 px-2 bg-cyan-500 min-h-12">
+                <p class="pt-2 px-1 text-md font-normal text-white">
+                  Отзыв с Untappd
+                </p>
+                <p class="pb-2 px-1 text-md font-normal text-white">
+                  {beer.last_review}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      {/each}
+        {/each}
+      {/await}
     </div>
-    <div class="flex flex-grow justify-center items-end mt-12">
+    <div class="flex flex-grow justify-center items-end my-12">
       <Button
         class="bg-cyan-500 py-4 px-8 text-white text-xl rounded-lg mr-2"
         on:click={() => {

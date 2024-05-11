@@ -40,7 +40,7 @@ export enum Styles {
   ne_ipa = 'New England IPA',
   m_ipa = 'Mountain IPA',
   c_ipa = 'Cold IPA',
-  stout = 'Стаут',
+  stout = 'Стаут / Портер',
   baltic_porter = 'Baltic Портер',
   barleywine = 'Барливайн',
   berries = 'Ягодное',
