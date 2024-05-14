@@ -20,12 +20,13 @@
     </button>
   </div>
   <img
-    class="absolute -z-10 -rotate-[25deg] -right-40 top-24"
+    class="animate-pulse absolute -z-10 -rotate-[25deg] -right-40 top-24"
     src="ltp.png"
     alt="" />
   <div class="flex flex-col mb-4">
     <div class="flex text-white text-4xl">Заведения</div>
-    <div class="overflow-x-scroll flex flex-row mt-4 space-x-3">
+    <div
+      class="overflow-x-scroll flex flex-row mt-4 space-x-3 [&::-webkit-scrollbar]:hidden">
       <Button
         class="p-0 bg-cyan-500 focus:ring-0 
         min-w-80 text-start"
