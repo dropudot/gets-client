@@ -1,10 +1,13 @@
-<script lang="ts">
+<script lang="ts" context="module">
   import { goto } from '$app/navigation'
   import { env } from '$env/dynamic/public'
+  import { Button } from 'flowbite-svelte'
   import Butylochka from '../components/Butylochka.svelte'
   import Golodranets from '../components/Golodranets.svelte'
   import Lager from '../components/Lager.svelte'
   import Shroom from '../components/Shroom.svelte'
+
+  export let selected_location: string
 </script>
 
 <div class="flex flex-col p-2 h-full z-0 overflow-x-hidden relative">
@@ -22,31 +25,65 @@
     alt="" />
   <div class="flex flex-col mb-4">
     <div class="flex text-white text-4xl">Заведения</div>
-    <div class="overflow-x-scroll flex flex-row">
-      <div class="space-y-4 mt-4 mx-2 bg-fuchsia-500 min-w-72 text-start p-0">
-        <Shroom>
-          <p class="mb-3">Секретный бар с пивом и мак-н-чизами</p>
-          <p>15:00 - 02:00</p>
-        </Shroom>
-      </div>
-      <div class="space-y-4 mt-4 mx-2 bg-cyan-500 min-w-72 text-start p-0">
-        <Golodranets>
-          <p class="mb-3">Бар с многолетней историей и широким выбором пива</p>
-          <p>15:00 - 02:00</p>
-        </Golodranets>
-      </div>
-      <div class="space-y-4 mt-4 mx-2 bg-fuchsia-500 min-w-72 text-start p-0">
-        <Lager>
-          <p class="mb-3">Молодой бар с бильярдом и шаффлбордом</p>
-          <p>17:00 - 02:00</p>
-        </Lager>
-      </div>
-      <div class="space-y-4 mt-4 mx-2 bg-cyan-500 min-w-72 text-start p-0">
-        <Butylochka>
-          <p class="mb-3">Боттл шоп по соседству с Голодранцем</p>
-          <p>12:00 - 23:00</p>
-        </Butylochka>
-      </div>
+    <div class="overflow-x-scroll flex flex-row mt-4 space-x-3">
+      <Button
+        class="p-0 bg-cyan-500 focus:ring-0 
+        min-w-80 text-start"
+        on:click={() => {
+          selected_location = 'Шрум'
+          goto(`${env.PUBLIC_CLIENT_URL}/bar`)
+        }}>
+        <div class="mt-4 mx-2 min-w-72 text-start p-0">
+          <Shroom>
+            <p class="mb-3">Секретный бар с пивом и мак-н-чизами</p>
+            <p>15:00 - 02:00</p>
+          </Shroom>
+        </div>
+      </Button>
+      <Button
+        class="p-0 bg-cyan-500 focus:ring-0
+        min-w-80 text-start"
+        on:click={() => {
+          selected_location = 'Голодранец'
+          goto(`${env.PUBLIC_CLIENT_URL}/bar`)
+        }}>
+        <div class="space-y-4 mt-4 mx-2 min-w-72 text-start p-0">
+          <Golodranets>
+            <p class="mb-3">
+              Бар с многолетней историей и широким выбором пива
+            </p>
+            <p>15:00 - 02:00</p>
+          </Golodranets>
+        </div>
+      </Button>
+      <Button
+        class="p-0 bg-cyan-500 focus:ring-0 
+        min-w-80 text-start"
+        on:click={() => {
+          selected_location = 'Лагер'
+          goto(`${env.PUBLIC_CLIENT_URL}/bar`)
+        }}>
+        <div class="space-y-4 mt-4 mx-2 min-w-72 text-start p-0">
+          <Lager>
+            <p class="mb-3">Молодой бар с бильярдом и шаффлбордом</p>
+            <p>17:00 - 02:00</p>
+          </Lager>
+        </div>
+      </Button>
+      <Button
+        class="p-0 focus:ring-0 bg-cyan-500
+        min-w-80 text-start"
+        on:click={() => {
+          selected_location = 'Бутылочка'
+          goto(`${env.PUBLIC_CLIENT_URL}/bar`)
+        }}>
+        <div class="space-y-4 mt-4 mx-2 min-w-72 text-start p-0">
+          <Butylochka>
+            <p class="mb-3">Боттл шоп по соседству с Голодранцем</p>
+            <p>12:00 - 23:00</p>
+          </Butylochka>
+        </div>
+      </Button>
     </div>
   </div>
 </div>

@@ -19,3 +19,7 @@ export type FilterBeer = {
   subcategory: string
   style: string | null
 }
+
+export type LocationFilter = {
+  location: string
+}
