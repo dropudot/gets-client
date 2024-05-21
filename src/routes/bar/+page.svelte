@@ -39,7 +39,11 @@
         class="space-y-4 mx-2 bg-fuchsia-500 max-w-56 min-w-56 text-start p-0">
         <div class="h-full flex flex-col justify-between">
           <div class="mb-auto break-words">
-            <img src={beer.img_url} class="pt-0" alt="" />
+            <div class="m-2">
+              <div class="py-2 flex justify-center bg-cyan-500">
+                <img src={beer.img_url} class="max-h-48 max-w-48" alt="" />
+              </div>
+            </div>
             <h5 class="mt-2 mb-1 px-2 text-xl font-bold text-white">
               {beer.name}
             </h5>

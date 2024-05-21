@@ -1068,22 +1068,31 @@
           {#each beer as beer}
             <div
               class="space-y-4 mx-2 bg-fuchsia-500 max-w-56 min-w-56 text-start p-0">
-              <div>
-                <img src={beer.img_url} class="pt-0" alt="" />
-                <h5 class="mt-2 mb-1 px-2 text-xl font-bold text-white">
-                  {beer.name}
-                </h5>
-                <p class="mb-1 px-2 text-md font-normal text-white">
-                  {beer.untappd_style} ({beer.abv}%)
-                </p>
-                <p class="mb-1 px-2 text-md font-normal text-white">
-                  {beer.brewery}
-                </p>
-                <p class="mb-1 px-2 text-md font-normal text-white">
-                  {beer.description}
-                </p>
-                <div class="m-2 px-2 bg-cyan-500 min-h-12">
-                  <p class="pt-2 px-1 text-md font-normal text-white">
+              <div class="h-full flex flex-col justify-between">
+                <div class="mb-auto break-words">
+                  <div class="m-2">
+                    <div class="py-2 flex justify-center bg-cyan-500">
+                      <img
+                        src={beer.img_url}
+                        class="max-h-48 max-w-48"
+                        alt="" />
+                    </div>
+                  </div>
+                  <h5 class="mt-2 mb-1 px-2 text-xl font-bold text-white">
+                    {beer.name}
+                  </h5>
+                  <p class="mb-1 px-2 text-md font-normal text-white">
+                    {beer.untappd_style} ({beer.abv}%)
+                  </p>
+                  <p class="mb-1 px-2 text-md font-normal text-white">
+                    {beer.brewery}
+                  </p>
+                  <p class="mb-1 px-2 text-md font-normal text-white">
+                    {beer.description}
+                  </p>
+                </div>
+                <div class="m-2 px-2 bg-cyan-500 min-h-12 relative bottom-0">
+                  <p class="pt-2 px-1 text-md font-bold text-white">
                     Отзыв с Untappd
                   </p>
                   <p class="pb-2 px-1 text-md font-normal text-white">
