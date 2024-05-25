@@ -2,12 +2,12 @@
   import { goto } from '$app/navigation'
   import { env } from '$env/dynamic/public'
   import { Button } from 'flowbite-svelte'
-  import Butylochka from '../components/Butylochka.svelte'
-  import Golodranets from '../components/Golodranets.svelte'
-  import Lager from '../components/Lager.svelte'
-  import Shroom from '../components/Shroom.svelte'
-
-  export let selected_location: string
+  import Butylochka from '$lib/components/Butylochka.svelte'
+  import Golodranets from '$lib/components/Golodranets.svelte'
+  import Lager from '$lib/components/Lager.svelte'
+  import Shroom from '$lib/components/Shroom.svelte'
+  import { changeLocation } from '$lib/data'
+  import { Locations } from '$lib/enums'
 </script>
 
 <div class="flex flex-col p-2 h-full z-0 overflow-x-hidden relative">
@@ -31,7 +31,7 @@
         class="p-0 bg-cyan-500 focus:ring-0 
         min-w-80 text-start"
         on:click={() => {
-          selected_location = 'Шрум'
+          changeLocation(Locations.shroom)
           goto(`${env.PUBLIC_CLIENT_URL}/bar`)
         }}>
         <div class="mt-4 mx-2 min-w-72 text-start p-0">
@@ -45,7 +45,7 @@
         class="p-0 bg-cyan-500 focus:ring-0
         min-w-80 text-start"
         on:click={() => {
-          selected_location = 'Голодранец'
+          changeLocation(Locations.golodranets)
           goto(`${env.PUBLIC_CLIENT_URL}/bar`)
         }}>
         <div class="space-y-4 mt-4 mx-2 min-w-72 text-start p-0">
@@ -61,7 +61,7 @@
         class="p-0 bg-cyan-500 focus:ring-0 
         min-w-80 text-start"
         on:click={() => {
-          selected_location = 'Лагер'
+          changeLocation(Locations.lager)
           goto(`${env.PUBLIC_CLIENT_URL}/bar`)
         }}>
         <div class="space-y-4 mt-4 mx-2 min-w-72 text-start p-0">
@@ -75,7 +75,7 @@
         class="p-0 focus:ring-0 bg-cyan-500
         min-w-80 text-start"
         on:click={() => {
-          selected_location = 'Бутылочка'
+          changeLocation(Locations.butylochka)
           goto(`${env.PUBLIC_CLIENT_URL}/bar`)
         }}>
         <div class="space-y-4 mt-4 mx-2 min-w-72 text-start p-0">

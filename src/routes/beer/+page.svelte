@@ -1,16 +1,18 @@
 <script lang="ts">
   import { Button } from 'flowbite-svelte'
-  import Golodranets from '../../components/Golodranets.svelte'
-  import Shroom from '../../components/Shroom.svelte'
-  import Lager from '../../components/Lager.svelte'
-  import Butylochka from '../../components/Butylochka.svelte'
-  import { Locations, Categories, Subcategories, Styles } from './enums'
-  import type { Beer, FilterBeer } from './types'
+  import Golodranets from '$lib/components/Golodranets.svelte'
+  import Shroom from '$lib/components/Shroom.svelte'
+  import Lager from '$lib/components/Lager.svelte'
+  import Butylochka from '$lib/components/Butylochka.svelte'
+  import { Locations, Categories, Subcategories, Styles } from '$lib/enums'
+  import type { Beer, FilterBeer } from '$lib/types'
   import { env } from '$env/dynamic/public'
   import { fly, type FlyParams } from 'svelte/transition'
+  import { goto } from '$app/navigation'
+  import { location, changeLocation } from '$lib/data'
 
   let location_page = true
-  let location: Locations
+  let isSelected = false
 
   let category_page = false
   let category: Categories
@@ -105,7 +107,8 @@
             ? 'bg-fuchsia-500'
             : 'bg-cyan-500'} min-w-80 text-start p-0"
           on:click={() => {
-            location = Locations.shroom
+            changeLocation(Locations.shroom)
+            isSelected = true
             isClickedS = true
             isClickedB = false
             isClickedG = false
@@ -118,7 +121,8 @@
             ? 'bg-fuchsia-500'
             : 'bg-cyan-500'} min-w-80 text-start p-0"
           on:click={() => {
-            location = Locations.golodranets
+            changeLocation(Locations.golodranets)
+            isSelected = true
             isClickedG = true
             isClickedS = false
             isClickedL = false
@@ -131,7 +135,8 @@
             ? 'bg-fuchsia-500'
             : 'bg-cyan-500'} min-w-80 text-start p-0"
           on:click={() => {
-            location = Locations.lager
+            changeLocation(Locations.lager)
+            isSelected = true
             isClickedL = true
             isClickedS = false
             isClickedG = false
@@ -144,7 +149,8 @@
             ? 'bg-fuchsia-500'
             : 'bg-cyan-500'} min-w-80 text-start p-0"
           on:click={() => {
-            location = Locations.butylochka
+            changeLocation(Locations.butylochka)
+            isSelected = true
             isClickedB = true
             isClickedS = false
             isClickedG = false
@@ -154,7 +160,7 @@
         </Button>
       </div>
       <div class="flex justify-center mt-16">
-        {#if location == null}
+        {#if !isSelected}
           <Button
             class="bg-fuchsia-500 py-4 px-16 text-white text-xl rounded-lg"
             disabled
@@ -236,37 +242,45 @@
             class="w-full py-5 ms-3 text-xl text-white">Соленое</label>
         </div>
       </div>
-      <div class="flex justify-center mt-12">
-        <Button
-          class="bg-cyan-500 py-4 px-8 text-white text-xl rounded-lg mr-2"
-          on:click={() => {
-            flyBack()
-            location_page = true
-            category_page = false
-          }}>
-          &#8592;
-        </Button>
-        {#if category == null}
+      <div class="flex flex-col">
+        <div class="flex justify-center mt-12">
           <Button
-            class="bg-fuchsia-500 py-4 px-16 text-white text-xl rounded-lg"
-            disabled
+            class="bg-cyan-500 py-4 px-8 text-white text-xl rounded-lg mr-2"
             on:click={() => {
+              flyBack()
+              location_page = true
               category_page = false
-              subcategory_page = true
             }}>
-            Далее
+            &#8592;
           </Button>
-        {:else}
+          {#if category == null}
+            <Button
+              class="bg-fuchsia-500 py-4 px-16 text-white text-xl rounded-lg"
+              disabled
+              on:click={() => {
+                category_page = false
+                subcategory_page = true
+              }}>
+              Далее
+            </Button>
+          {:else}
+            <Button
+              class="bg-fuchsia-500 py-4 px-16 text-white text-xl rounded-lg"
+              on:click={() => {
+                flyForward()
+                category_page = false
+                subcategory_page = true
+              }}>
+              Далее
+            </Button>
+          {/if}
+        </div>
+        <div class="flex justify-center">
           <Button
-            class="bg-fuchsia-500 py-4 px-16 text-white text-xl rounded-lg"
-            on:click={() => {
-              flyForward()
-              category_page = false
-              subcategory_page = true
-            }}>
-            Далее
-          </Button>
-        {/if}
+            class="text-gray-400 mt-2 focus:ring-0"
+            on:click={() => goto(`${env.PUBLIC_CLIENT_URL}/random`)}
+            >не знаю, что выбрать</Button>
+        </div>
       </div>
     </div>
   {:else if subcategory_page}
@@ -1060,48 +1074,90 @@
           </p>
         </div>
       </div>
-      <div
-        class="overflow-x-scroll flex flex-row [&::-webkit-scrollbar]:hidden">
+      <div class="flex flex-row justify-center">
         {#await beer}
           <div></div>
         {:then beer}
-          {#each beer as beer}
-            <div
-              class="space-y-4 mx-2 bg-fuchsia-500 max-w-56 min-w-56 text-start p-0">
-              <div class="h-full flex flex-col justify-between">
-                <div class="mb-auto break-words">
-                  <div class="m-2">
-                    <div class="py-2 flex justify-center bg-cyan-500">
-                      <img
-                        src={beer.img_url}
-                        class="max-h-48 max-w-48"
-                        alt="" />
+          {#if beer.length == 1}
+            {#each beer as beer}
+              <div class="space-y-4 bg-fuchsia-500 w-80 text-start p-0">
+                <div class="h-full flex flex-col justify-between">
+                  <div class="mb-auto break-words">
+                    <div class="m-2">
+                      <div class="py-2 flex justify-center bg-cyan-500">
+                        <img
+                          src={beer.img_url}
+                          class="max-h-48 max-w-48"
+                          alt="" />
+                      </div>
                     </div>
+                    <h5 class="mt-2 mb-1 px-2 text-xl font-bold text-white">
+                      {beer.name}
+                    </h5>
+                    <p class="mb-1 px-2 text-md font-normal text-white">
+                      {beer.untappd_style} ({beer.abv}%)
+                    </p>
+                    <p class="mb-1 px-2 text-md font-normal text-white">
+                      {beer.brewery}
+                    </p>
+                    <p class="mb-1 px-2 text-md font-normal text-white">
+                      {beer.description}
+                    </p>
                   </div>
-                  <h5 class="mt-2 mb-1 px-2 text-xl font-bold text-white">
-                    {beer.name}
-                  </h5>
-                  <p class="mb-1 px-2 text-md font-normal text-white">
-                    {beer.untappd_style} ({beer.abv}%)
-                  </p>
-                  <p class="mb-1 px-2 text-md font-normal text-white">
-                    {beer.brewery}
-                  </p>
-                  <p class="mb-1 px-2 text-md font-normal text-white">
-                    {beer.description}
-                  </p>
-                </div>
-                <div class="m-2 px-2 bg-cyan-500 min-h-12 relative bottom-0">
-                  <p class="pt-2 px-1 text-md font-bold text-white">
-                    Отзыв с Untappd
-                  </p>
-                  <p class="pb-2 px-1 text-md font-normal text-white">
-                    {beer.last_review}
-                  </p>
+                  <div class="m-2 px-2 bg-cyan-500 min-h-12 relative bottom-0">
+                    <p class="pt-2 px-1 text-md font-bold text-white">
+                      Отзыв с Untappd
+                    </p>
+                    <p class="pb-2 px-1 text-md font-normal text-white">
+                      {beer.last_review}
+                    </p>
+                  </div>
                 </div>
               </div>
+            {/each}
+          {:else}
+            <div
+              class="overflow-x-scroll flex flex-row [&::-webkit-scrollbar]:hidden">
+              {#each beer as beer}
+                <div
+                  class="space-y-4 mx-2 bg-fuchsia-500 max-w-56 min-w-56 text-start p-0">
+                  <div class="h-full flex flex-col justify-between">
+                    <div class="mb-auto break-words">
+                      <div class="m-2">
+                        <div class="py-2 flex justify-center bg-cyan-500">
+                          <img
+                            src={beer.img_url}
+                            class="max-h-48 max-w-48"
+                            alt="" />
+                        </div>
+                      </div>
+                      <h5 class="mt-2 mb-1 px-2 text-xl font-bold text-white">
+                        {beer.name}
+                      </h5>
+                      <p class="mb-1 px-2 text-md font-normal text-white">
+                        {beer.untappd_style} ({beer.abv}%)
+                      </p>
+                      <p class="mb-1 px-2 text-md font-normal text-white">
+                        {beer.brewery}
+                      </p>
+                      <p class="mb-1 px-2 text-md font-normal text-white">
+                        {beer.description}
+                      </p>
+                    </div>
+                    <div
+                      class="m-2 px-2 bg-cyan-500 min-h-12 relative bottom-0">
+                      <p class="pt-2 px-1 text-md font-bold text-white">
+                        Отзыв с Untappd
+                      </p>
+                      <p class="pb-2 px-1 text-md font-normal text-white">
+                        {beer.last_review}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              {/each}
             </div>
-          {/each}
+          {/if}
         {/await}
       </div>
       <div class="flex flex-grow justify-center items-end my-12">

@@ -1,18 +1,13 @@
 <script lang="ts">
   import { env } from '$env/dynamic/public'
   import { Button } from 'flowbite-svelte'
-  import { selected_location } from '../+page.svelte'
-  import type { Beer, LocationFilter } from '../beer/types'
+  import { location } from '$lib/data'
+  import type { Beer, LocationFilter } from '$lib/types'
   import { goto } from '$app/navigation'
-
-  let current_location = selected_location
-  if (current_location == undefined) {
-    current_location = 'Шрум'
-  }
 
   async function get_all_beer() {
     const filter: LocationFilter = {
-      location: current_location,
+      location: location,
     }
 
     const response = await fetch(`${env.PUBLIC_API_URL}/all_beer`, {
@@ -28,7 +23,7 @@
   let all_beer = get_all_beer()
 </script>
 
-<div class="text-white text-5xl pt-2 px-2 pb-4">{current_location}</div>
+<div class="text-white text-5xl pt-2 px-2 pb-4">{location}</div>
 <div class="text-white text-3xl mt-6 px-2 pb-4">Все напитки</div>
 <div class="overflow-x-scroll flex flex-row [&::-webkit-scrollbar]:hidden">
   {#await all_beer}
@@ -41,7 +36,7 @@
           <div class="mb-auto break-words">
             <div class="m-2">
               <div class="py-2 flex justify-center bg-cyan-500">
-                <img src={beer.img_url} class="max-h-48 max-w-48" alt="" />
+                <img src={beer.img_url} class="h-48 w-48" alt="" />
               </div>
             </div>
             <h5 class="mt-2 mb-1 px-2 text-xl font-bold text-white">
