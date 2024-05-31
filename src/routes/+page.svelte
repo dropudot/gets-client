@@ -1,6 +1,5 @@
 <script lang="ts" context="module">
   import { goto } from '$app/navigation'
-  import { env } from '$env/dynamic/public'
   import { Button } from 'flowbite-svelte'
   import Butylochka from '$lib/components/Butylochka.svelte'
   import Golodranets from '$lib/components/Golodranets.svelte'
@@ -8,6 +7,8 @@
   import Shroom from '$lib/components/Shroom.svelte'
   import { changeLocation } from '$lib/data'
   import { Locations } from '$lib/enums'
+
+  import { CLIENT_URL } from '$lib/data'
 </script>
 
 <div class="flex flex-col p-2 h-full z-0 overflow-x-hidden relative">
@@ -26,7 +27,7 @@
     <button
       class="bg-cyan-500 py-2 px-20 text-white text-3xl rounded-lg
       lg:text-4xl lg:py-4 lg:px-24"
-      on:click={() => goto(`${env.PUBLIC_CLIENT_URL}/beer`)}>
+      on:click={() => goto(`${CLIENT_URL}/beer`)}>
       Начать
     </button>
   </div>
@@ -71,7 +72,7 @@
         lg:grow"
         on:click={() => {
           changeLocation(Locations.shroom)
-          goto(`${env.PUBLIC_CLIENT_URL}/bar`)
+          goto(`${CLIENT_URL}/bar`)
         }}>
         <div
           class="mt-4 mx-2 min-w-72 text-start p-0
@@ -87,7 +88,7 @@
         lg:grow"
         on:click={() => {
           changeLocation(Locations.golodranets)
-          goto(`${env.PUBLIC_CLIENT_URL}/bar`)
+          goto(`${CLIENT_URL}/bar`)
         }}>
         <div
           class="space-y-4 mt-4 mx-2 min-w-72 text-start p-0
@@ -105,7 +106,7 @@
         lg:grow"
         on:click={() => {
           changeLocation(Locations.lager)
-          goto(`${env.PUBLIC_CLIENT_URL}/bar`)
+          goto(`${CLIENT_URL}/bar`)
         }}>
         <div
           class="space-y-4 mt-4 mx-2 min-w-72 text-start p-0
@@ -121,7 +122,7 @@
         lg:grow"
         on:click={() => {
           changeLocation(Locations.butylochka)
-          goto(`${env.PUBLIC_CLIENT_URL}/bar`)
+          goto(`${CLIENT_URL}/bar`)
         }}>
         <div
           class="space-y-4 mt-4 mx-2 min-w-72 text-start p-0

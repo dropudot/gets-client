@@ -1,16 +1,17 @@
 <script lang="ts">
-  import { env } from '$env/dynamic/public'
   import { Button } from 'flowbite-svelte'
   import { location } from '$lib/data'
   import type { Beer, LocationFilter } from '$lib/types'
   import { goto } from '$app/navigation'
+
+  import { API_URL, CLIENT_URL } from '$lib/data'
 
   async function get_all_beer() {
     const filter: LocationFilter = {
       location: location,
     }
 
-    const response = await fetch(`${env.PUBLIC_API_URL}/all_beer`, {
+    const response = await fetch(`${API_URL}/all_beer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -30,7 +31,7 @@
     <Button
       class="bg-cyan-500 py-4 px-8 text-white text-xl rounded-lg mr-2"
       on:click={() => {
-        goto(`${env.PUBLIC_CLIENT_URL}`)
+        goto(`${CLIENT_URL}`)
       }}>
       &#8592;
     </Button>
@@ -110,7 +111,7 @@ lg:hidden">
   <Button
     class="bg-cyan-500 py-4 px-8 text-white text-xl rounded-lg mr-2"
     on:click={() => {
-      goto(`${env.PUBLIC_CLIENT_URL}`)
+      goto(`${CLIENT_URL}`)
     }}>
     &#8592;
   </Button>

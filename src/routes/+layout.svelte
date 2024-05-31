@@ -1,13 +1,14 @@
 <script lang="ts">
   import '../app.css'
-  import { env } from '$env/dynamic/public'
   import { goto } from '$app/navigation'
+
+  import { CLIENT_URL } from '$lib/data'
 </script>
 
 <header class="bg-cyan-500 h-16">
   <div class="h-full flex">
     <div class="flex w-full items-center justify-center">
-      <button on:click={() => goto(`${env.PUBLIC_CLIENT_URL}`)}>
+      <button on:click={() => goto(`${CLIENT_URL}`)}>
         <img class="w-12" src="logo.png" alt="" />
       </button>
     </div>

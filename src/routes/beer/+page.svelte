@@ -6,10 +6,11 @@
   import Butylochka from '$lib/components/Butylochka.svelte'
   import { Locations, Categories, Subcategories, Styles } from '$lib/enums'
   import type { Beer, FilterBeer } from '$lib/types'
-  import { env } from '$env/dynamic/public'
   import { fly, type FlyParams } from 'svelte/transition'
   import { goto } from '$app/navigation'
   import { location, changeLocation } from '$lib/data'
+
+  import { API_URL, CLIENT_URL } from '$lib/data'
 
   let location_page = true
   let isSelected = false
@@ -81,7 +82,7 @@
       style: styleKey,
     }
 
-    const response = await fetch(`${env.PUBLIC_API_URL}/result_beer`, {
+    const response = await fetch(`${API_URL}/result_beer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -411,7 +412,7 @@ lg:mx-6">
           <Button
             class="text-gray-400 mt-2 focus:ring-0
             lg:text-lg"
-            on:click={() => goto(`${env.PUBLIC_CLIENT_URL}/random`)}
+            on:click={() => goto(`${CLIENT_URL}/random`)}
             >не знаю, что выбрать</Button>
         </div>
       </div>

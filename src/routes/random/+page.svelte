@@ -1,15 +1,16 @@
 <script lang="ts">
-  import { env } from '$env/dynamic/public'
   import { Button } from 'flowbite-svelte'
   import type { Beer, LocationFilter } from '$lib/types'
   import { location } from '$lib/data'
+
+  import { API_URL } from '$lib/data'
 
   async function get_random_beer() {
     const filter: LocationFilter = {
       location: location,
     }
 
-    const response = await fetch(`${env.PUBLIC_API_URL}/random_beer`, {
+    const response = await fetch(`${API_URL}/random_beer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
